@@ -1,17 +1,18 @@
-from django.contrib.auth.views import LoginView, LogoutView  # noqa: F401
-from django.contrib.auth.forms import AuthenticationForm
-from django.views.generic import FormView
-from .forms import CustomUserCreationForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 
-class UserRegisterView(FormView):
+class UserRegisterView(CreateView):
     form_class = CustomUserCreationForm
-    template_name = ""
-    # success_url = ""
+    template_name = "users/register.html"
+    success_url = reverse_lazy("home")
 
 
 class UserLoginView(LoginView):
-    form_class = AuthenticationForm
-    template_name = 'users/login.html'
-    # success_url = ""
+    form_class = CustomAuthenticationForm
+    template_name = "users/login.html"
 
+    def get_success_url(self):
+        return reverse_lazy("home")

@@ -1,0 +1,118 @@
+{% extends 'base.html' %} 
+
+{% block title %}Главная{% endblock %} 
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="text-center mb-16">
+    <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+      Современный помощник
+      <span
+        class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
+      >
+        для учителей
+      </span>
+    </h1>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+      Создавайте увлекательные планы уроков с помощью искусственного интеллекта.
+      Экономьте время и вдохновляйте своих учеников.
+    </p>
+
+    {% if user.is_authenticated %}
+    <a
+      href="{% url 'lessons:studyclass_list' %}"
+      class="bg-primary-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary-600 transition inline-block"
+    >
+      Перейти к классам
+    </a>
+    {% else %}
+    <div class="space-x-4">
+      <a
+        href="{% url 'users:register' %}"
+        class="bg-primary-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary-600 transition inline-block"
+      >
+        Начать бесплатно
+      </a>
+      <a
+        href="{% url 'users:login' %}"
+        class="border border-primary-500 text-primary-500 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary-50 transition inline-block"
+      >
+        Войти
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-8 mb-16">
+    <div class="text-center p-6">
+      <div
+        class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4"
+      >
+        <svg
+          class="w-8 h-8 text-primary-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          ></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Умные планы уроков</h3>
+      <p class="text-gray-600">
+        AI-генерация планов по вашим требованиям и предпочтениям
+      </p>
+    </div>
+
+    <div class="text-center p-6">
+      <div
+        class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center mx-auto mb-4"
+      >
+        <svg
+          class="w-8 h-8 text-secondary-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+          ></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Управление классами</h3>
+      <p class="text-gray-600">
+        Создавайте и редактируйте классы для разных предметов
+      </p>
+    </div>
+
+    <div class="text-center p-6">
+      <div
+        class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4"
+      >
+        <svg
+          class="w-8 h-8 text-primary-600"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          ></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">Экспорт в PDF/DOCX</h3>
+      <p class="text-gray-600">Скачивайте готовые планы в удобном формате</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

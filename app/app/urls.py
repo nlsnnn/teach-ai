@@ -17,10 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include(("users.urls", "users"), namespace="users")),
     path("lesson/", include(("lesson_plans.urls", "lesson_plans"), namespace="lessons")),
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),  # Добавляем главную страницу
+
 ]
