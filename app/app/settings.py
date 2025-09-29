@@ -146,3 +146,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 
+
+AI_BASE_URL="https://api.intelligence.io.solutions/api/v1"
+AI_KEY="io-v2-eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJvd25lciI6IjA5ODA0Y2ZiLTYwOTUtNDM5NS1iY2RiLTZlNzVjNDY1YmNlNiIsImV4cCI6NDkxMjc0MTIyN30.dFO1ysVvofUvEJvIHFotsBsCW14tnuo9fEaRGbwv2NmgJcDxKwSxZlN422gxiQK2a60wu4HorjHZzGH3aAz2mw"
+AI_MODEL="meta-llama/Llama-3.3-70B-Instruct"
