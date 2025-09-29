@@ -7,7 +7,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 class UserRegisterView(CreateView):
     form_class = CustomUserCreationForm
     template_name = "users/register.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("users:login")
 
 
 class UserLoginView(LoginView):

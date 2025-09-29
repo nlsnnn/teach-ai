@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}TeachAI{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"> <!-- Исправлено на output.css -->
   </head>
   <body class="bg-gray-50 min-h-screen flex flex-col">
     <nav class="bg-white shadow-sm border-b">
@@ -33,9 +33,12 @@
       </div>
     </nav>
 
-    <main class="flex-grow">{% block content %} {% endblock %}</main>
+    <main class="flex-grow flex items-center justify-center py-8">
+      {% block content %} 
+      {% endblock %}
+    </main>
 
-    <footer class="bg-white border-t">
+    <footer class="bg-white border-t mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="text-center text-gray-600">
           <p>&copy; 2025 TeachAI. Помощник для современных учителей.</p>
