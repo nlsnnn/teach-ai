@@ -8,4 +8,6 @@ urlpatterns = [
     path("<int:pk>/", views.LessonPlanDetailView.as_view(), name="detail"),
     path("<int:pk>/delete/", views.LessonPlanDeleteView.as_view(), name="delete"),
     path("<int:pk>/generate/", views.generate_ai_plan, name="generate"),
+    path("<int:pk>/export-pdf/", views.export_pdf, name="export_pdf"),
+    path("<int:pk>/export-docx/", views.export_docx, name="export_docx"),
 ]
