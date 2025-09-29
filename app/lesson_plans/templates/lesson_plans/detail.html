@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+
+{% block title %}{{ plan.topic }} - Детали плана{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="flex justify-between items-start mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ plan.topic }}</h1>
+                <p class="text-gray-600 mt-2">
+                    Класс: {{ plan.study_class.name }} • Предмет: {{ plan.study_class.subject }} • {{ plan.hours }} часов
+                </p>
+            </div>
+            <div class="flex space-x-2">
+                <a href="{% url 'lessons:list' %}" 
+                   class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition">
+                    Назад
+                </a>
+                <a href="{% url 'lessons:delete' plan.pk %}" 
+                   class="bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition">
+                    Удалить
+                </a>
+            </div>
+        </div>
+
+        {% if plan.preferences %}
+        <div class="bg-primary-50 rounded-lg p-4 mb-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Пожелания учителя</h3>
+            <p class="text-gray-700">{{ plan.preferences }}</p>
+        </div>
+        {% endif %}
+
+        <div id="plan-content">
+            {% if plan.generated_text %}
+                <div class="prose max-w-none">
+                    {{ plan.generated_text|markdown }}
+                </div>
+            {% else %}
+                <div class="text-center py-12 bg-gray-50 rounded-lg">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">План еще не сгенерирован</h3>
+                    <p class="text-gray-600 mb-4">Нажмите кнопку ниже, чтобы создать детальный план с помощью AI.</p>
+                    <button id="generate-btn" 
+                            class="bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-600 transition">
+                        Сгенерировать план
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+
+        <div id="loading" class="hidden text-center py-8">
+            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-primary-600 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+            </div>
+            <p class="text-gray-600">Идет генерация плана... Это может занять несколько секунд.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const generateBtn = document.getElementById('generate-btn');
+    const loading = document.getElementById('loading');
+    const planContent = document.getElementById('plan-content');
+
+    if (generateBtn) {
+        generateBtn.addEventListener('click', function() {
+            generateBtn.disabled = true;
+            loading.classList.remove('hidden');
+            planContent.classList.add('hidden');
+
+            fetch(`{% url 'lessons:generate' plan.pk %}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Ошибка при генерации: ' + data.error);
+                    loading.classList.add('hidden');
+                    planContent.classList.remove('hidden');
+                    generateBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                alert('Ошибка сети: ' + error);
+                loading.classList.add('hidden');
+                planContent.classList.remove('hidden');
+                generateBtn.disabled = false;
+            });
+        });
+    }
+});
+</script>
+
+<style>
+.prose h1, .prose h2, .prose h3, .prose h4 {
+    font-weight: bold;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.prose h2 {
+    font-size: 1.5em;
+    color: #1f2937;
+    border-bottom: 2px solid #f15e1e;
+    padding-bottom: 0.3em;
+}
+
+.prose h3 {
+    font-size: 1.25em;
+    color: #374151;
+}
+
+.prose ul, .prose ol {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+}
+
+.prose li {
+    margin-bottom: 0.5em;
+}
+
+.prose strong {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.prose p {
+    margin-bottom: 1em;
+    line-height: 1.6;
+}
+</style>
+{% endblock %}

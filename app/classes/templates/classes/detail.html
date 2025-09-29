@@ -36,11 +36,11 @@
             <div class="bg-primary-50 rounded-lg p-4">
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Действия</h3>
                 <div class="space-y-2">
-                    <a href="{% url 'lessons:create' study_class.pk %}" 
+                    <a href="{% url 'lessons:create'%}?class={{study_class.pk}}" 
                        class="block w-full bg-primary-500 text-white text-center py-2 rounded-lg font-medium hover:bg-primary-600 transition">
                         Создать план урока
                     </a>
-                    <a href="{% url 'lessons:list' study_class.pk %}" 
+                    <a href="{% url 'lessons:list' %}?class={{study_class.pk}}" 
                        class="block w-full bg-white text-primary-500 text-center py-2 rounded-lg font-medium border border-primary-500 hover:bg-primary-50 transition">
                         Просмотреть планы уроков
                     </a>

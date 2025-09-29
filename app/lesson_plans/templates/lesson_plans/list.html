@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои планы уроков{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Мои планы уроков</h1>
+        <a href="{% url 'lessons:create' %}" 
+           class="bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-600 transition">
+            + Создать план
+        </a>
+    </div>
+
+    {% if plans %}
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {% for plan in plans %}
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xl font-semibold text-gray-900">{{ plan.topic }}</h3>
+                <span class="bg-primary-100 text-primary-600 text-sm font-medium px-2 py-1 rounded">
+                    {{ plan.hours }} ч
+                </span>
+            </div>
+            
+            <p class="text-gray-600 mb-2">
+                <span class="font-medium">Класс:</span> {{ plan.study_class.name }}
+            </p>
+            <p class="text-gray-600 mb-2">
+                <span class="font-medium">Предмет:</span> {{ plan.study_class.subject }}
+            </p>
+            
+            <div class="text-gray-500 text-sm mb-4">
+                <p>Создан: {{ plan.created_at|date:"d.m.Y H:i" }}</p>
+                {% if plan.generated_text %}
+                    <p class="text-green-600">✓ Сгенерирован</p>
+                {% else %}
+                    <p class="text-yellow-600">⏳ Ожидает генерации</p>
+                {% endif %}
+            </div>
+            
+            <div class="flex space-x-2">
+                <a href="{% url 'lessons:detail' plan.pk %}" 
+                   class="flex-1 bg-gray-100 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-200 transition">
+                    Просмотр
+                </a>
+                {% if not plan.generated_text %}
+                <a href="{% url 'lessons:detail' plan.pk %}" 
+                   class="flex-1 bg-primary-500 text-white text-center py-2 rounded-lg hover:bg-primary-600 transition">
+                    Сгенерировать
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">У вас пока нет планов уроков</h3>
+        <p class="text-gray-600 mb-4">Создайте свой первый план урока с помощью AI.</p>
+        <a href="{% url 'lessons:create' %}" 
+           class="bg-primary-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-600 transition">
+            Создать план
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -19,3 +19,9 @@ class LessonPlan(models.Model):
 
     def __str__(self):
         return f"План: {self.topic} ({self.study_class})"
+
+    class Meta:
+        verbose_name = "План урока"
+        verbose_name_plural = "Планы уроков"
+        ordering = ['-created_at']
+        

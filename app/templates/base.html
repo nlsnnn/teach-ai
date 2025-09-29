@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}TeachAI{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/output.css' %}"> <!-- Исправлено на output.css -->
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
   </head>
   <body class="bg-gray-50 min-h-screen flex flex-col">
     <nav class="bg-white shadow-sm border-b">
@@ -13,7 +13,9 @@
         <div class="flex justify-between h-16">
           <div class="flex items-center">
             <a href="{% url 'home' %}" class="flex items-center space-x-2">
-              <div class="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center">
+              <div
+                class="w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-lg flex items-center justify-center"
+              >
                 <span class="text-white font-bold text-sm">T</span>
               </div>
               <span class="text-xl font-bold text-gray-900">TeachAI</span>
@@ -22,19 +24,42 @@
 
           <div class="flex items-center space-x-4">
             {% if user.is_authenticated %}
-            <span class="text-gray-700">Добро пожаловать, {{ user.first_name|default:user.username }}</span>
-            <a href="{% url 'users:logout' %}" class="text-gray-600 hover:text-primary-600 transition">Выйти</a>
+            <a
+              href="{% url 'classes:list' %}"
+              class="text-gray-600 hover:text-primary-600 transition"
+              >Мои классы</a
+            >
+            <a
+              href="{% url 'lessons:list' %}"
+              class="text-gray-600 hover:text-primary-600 transition"
+              >Планы уроков</a
+            >
+            <span class="text-gray-700"
+              >Добро пожаловать, {{ user.first_name|default:user.username }}</span
+            >
+            <a
+              href="{% url 'users:logout' %}"
+              class="text-gray-600 hover:text-primary-600 transition"
+              >Выйти</a
+            >
             {% else %}
-            <a href="{% url 'users:login' %}" class="text-gray-600 hover:text-primary-600 transition">Войти</a>
-            <a href="{% url 'users:register' %}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition">Регистрация</a>
+            <a
+              href="{% url 'users:login' %}"
+              class="text-gray-600 hover:text-primary-600 transition"
+              >Войти</a
+            >
+            <a
+              href="{% url 'users:register' %}"
+              class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition"
+              >Регистрация</a
+            >
             {% endif %}
           </div>
         </div>
       </div>
     </nav>
 
-    {% block content %} 
-    {% endblock %}
+    {% block content %} {% endblock %}
 
     <footer class="bg-white border-t mt-auto">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
