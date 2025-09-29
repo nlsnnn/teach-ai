@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ study_class.name }} - Детали класса{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div class="flex justify-between items-start mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ study_class.name }}</h1>
+                <p class="text-gray-600 mt-2">Информация о классе и управление</p>
+            </div>
+            <div class="flex space-x-2">
+                <a href="{% url 'classes:edit' study_class.pk %}" 
+                   class="bg-primary-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-600 transition">
+                    Редактировать
+                </a>
+                <a href="{% url 'classes:list' %}" 
+                   class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-medium hover:bg-gray-200 transition">
+                    Назад
+                </a>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gray-50 rounded-lg p-4">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Основная информация</h3>
+                <div class="space-y-2">
+                    <p><span class="font-medium">Название:</span> {{ study_class.name }}</p>
+                    <p><span class="font-medium">Предмет:</span> {{ study_class.subject }}</p>
+                    <p><span class="font-medium">Средний возраст:</span> {{ study_class.age_group }} лет</p>
+                    <p><span class="font-medium">Учитель:</span> {{ study_class.teacher.get_full_name|default:study_class.teacher.username }}</p>
+                </div>
+            </div>
+
+            <div class="bg-primary-50 rounded-lg p-4">
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Действия</h3>
+
+            </div>
+        </div>
+
+        <div class="border-t pt-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">Планы уроков для этого класса</h3>
+            <p class="text-gray-600 text-center py-8">
+                Планы уроков будут отображаться здесь после создания
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

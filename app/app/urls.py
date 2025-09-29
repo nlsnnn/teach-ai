@@ -25,6 +25,5 @@ urlpatterns = [
     path("auth/", include(("users.urls", "users"), namespace="users")),
     path("lesson/", include(("lesson_plans.urls", "lesson_plans"), namespace="lessons")),
     path("class/", include(("classes.urls", "classes"), namespace="classes")),
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),  # Добавляем главную страницу
-
+    path("", TemplateView.as_view(template_name="home.html"), name="home"),
 ]
